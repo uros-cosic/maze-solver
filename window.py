@@ -28,3 +28,5 @@ class Window:
     def close(self):
         self.running = False
 
+    def draw_line(self, line, fill_color, width=2):
+        line.draw(self.__canvas, fill_color, width) 
