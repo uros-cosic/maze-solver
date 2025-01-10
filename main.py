@@ -5,8 +5,13 @@ from window import Window
 def main():
     win = Window(500, 500)
 
-    cell = Cell(Point(10, 10), Point(100, 100), win)
-    cell.draw()
+    cell_one = Cell(Point(10, 10), Point(100, 100), win)
+    cell_one.draw()
+
+    cell_two = Cell(Point(100, 10), Point(200, 100), win)
+    cell_two.draw()
+
+    cell_one.draw_move(cell_two)
 
     win.wait_for_close()
 
