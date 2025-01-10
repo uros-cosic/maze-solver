@@ -6,7 +6,7 @@ class Window:
         self.__height = height
 
         self.__root = Tk()
-        self.__root.title = "Maze solver"
+        self.__root.title("Maze solver")
 
         self.__canvas = Canvas()
         self.__canvas.pack()
@@ -30,3 +30,6 @@ class Window:
 
     def draw_line(self, line, fill_color, width=2):
         line.draw(self.__canvas, fill_color, width) 
+
+    def get_canvas(self):
+        return self.__canvas
