@@ -32,11 +32,11 @@ class Maze:
                 self._cells[i][j] = Cell(start_point, end_point, self._win)
                 self._cells[i][j].draw()
 
-                self._animate()
+                # self._animate()
 
-    def _animate(self):
+    def _animate(self, duration=0.0075):
         self._win.redraw()
-        time.sleep(0.033)
+        time.sleep(duration)
 
 
     def _break_entrance_and_exit(self):
@@ -134,13 +134,13 @@ class Maze:
 
         for cell, coords in to_visit:
             curr.draw_move(cell)
-            self._animate()
+            self._animate(0.01)
             res = self._solve(coords[0], coords[1])
             if res:
                 return True
             else:
                 curr.draw_move(cell, True) 
-                self._animate()
+                self._animate(0.01)
 
         return False
 

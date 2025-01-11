@@ -1,10 +1,25 @@
+import sys
 from maze import Maze
 from window import Window
 
 def main():
-    win = Window(500, 500)
+    win = Window(1000, 1000)
 
-    maze = Maze(10, 10, 10, 10, 30, 30, win)
+    args = sys.argv[1:]
+
+    rows = 30
+    cols = 30
+    seed = None
+
+    for arg in args:
+        if arg.startswith("rows="):
+            rows = int(arg.split("=")[1])
+        if arg.startswith("cols="):
+            cols = int(arg.split("=")[1])
+        if arg.startswith("seed="):
+            seed = int(arg.split("=")[1])
+
+    maze = Maze(10, 10, rows, cols, 30, 30, win, seed)
     res = maze.solve()
     print("Path exists" if res else "Path doesn't exist")
 
