@@ -21,6 +21,7 @@ class Maze:
         self._create_cells()
         self._break_entrance_and_exit()
         self._break_walls(0, 0)
+        self._reset_visited()
 
     def _create_cells(self):
         for i in range(len(self._cells)):
@@ -103,3 +104,46 @@ class Maze:
                 new_i, new_j = i, j + 1
 
             self._break_walls(new_i, new_j)
+
+    def _reset_visited(self):
+        for row in self._cells:
+            for cell in row:
+                cell.visited = False
+
+
+    def _solve(self, i, j):
+        curr = self._cells[i][j]
+
+        if curr == self._cells[self._cols - 1][self._rows - 1]:
+            return True
+
+        curr.visited = True
+
+        neighbours = self._get_adjacent_cells(i, j)
+        to_visit = []
+
+        for cell, pos in neighbours:
+            if pos == 'top' and not curr.has_top_wall:
+                to_visit.append([cell, [i - 1, j]])
+            if pos == 'bot' and not curr.has_bottom_wall:
+                to_visit.append([cell, [i + 1, j]])
+            if pos == 'left' and not curr.has_left_wall:
+                to_visit.append([cell, [i, j - 1]])
+            if pos == 'right' and not curr.has_right_wall:
+                to_visit.append([cell, [i, j + 1]])
+
+        for cell, coords in to_visit:
+            curr.draw_move(cell)
+            self._animate()
+            res = self._solve(coords[0], coords[1])
+            if res:
+                return True
+            else:
+                curr.draw_move(cell, True) 
+                self._animate()
+
+        return False
+
+
+    def solve(self):
+        return self._solve(0, 0)
